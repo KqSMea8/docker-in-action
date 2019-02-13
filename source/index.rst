@@ -14,6 +14,8 @@ Welcome to docker-in-action's documentation!
    docker/intro.md
    docker/basic_concept.md
    docker/basic_cmd.md
+   docker/practice.md
+   docker/appendix.md
 
 
 
