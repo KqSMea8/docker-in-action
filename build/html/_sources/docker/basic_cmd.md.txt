@@ -5,12 +5,12 @@
 ### 构建
 
 ```
-sudo docker build -t <image_name>:<image_tag> <docker_file_path>
+sudo docker build -t <image_name>:<image_tag> <docker_build_context>
 
 说明:
 * image_name: 镜像名称，例如: photon/probe。如果关联镜像仓库，需要带上仓库地址，例如: http://harbor.yitu.com/photon/probe。
 * image_tag: 镜像tag，用于区分不同的使用场景或者版本等。默认是 latest，不过强制要求以产品版本号设置tag。在使用基础镜像构建产品镜像时，不要使用 latest。
-* docker_file_path: Dockerfile路径，可以使用 . 表示当前路径。在构建Docker镜像时，再详细说明。
+* docker_build_context: Docker构建上下文路径，可以使用 . 表示当前路径。在构建Docker镜像时，再详细说明。
 ```
 
 ### 拉取镜像
