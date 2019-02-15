@@ -1,4 +1,10 @@
 # 运行
+## docker
+
+ ```
+ sudo docker run -d --rm -p 8000:8000 harbor.yitu-inc.com/observability/docker-in-action:0.1
+ ```
+
 ## 编译
 
 ```
