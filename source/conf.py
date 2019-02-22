@@ -41,8 +41,6 @@ release = '0.1.alpha'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.todo',
-    'sphinx.ext.mathjax',
     'recommonmark'
 ]
 
@@ -68,7 +66,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'cn'
+language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -117,7 +115,7 @@ htmlhelp_basename = 'docker-in-actiondoc'
 
 # -- Options for LaTeX output ------------------------------------------------
 
-latex_elements = {
+#latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
@@ -133,15 +131,15 @@ latex_elements = {
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
-}
+#}
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (master_doc, 'docker-in-action.tex', 'docker-in-action Documentation',
-     'loulou.liu', 'manual'),
-]
+#latex_documents = [
+#    (master_doc, 'docker-in-action.tex', 'docker-in-action Documentation',
+#     'loulou.liu', 'manual'),
+#]
 
 
 # -- Options for manual page output ------------------------------------------
@@ -189,4 +187,3 @@ epub_exclude_files = ['search.html']
 # -- Options for todo extension ----------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
