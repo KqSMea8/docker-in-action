@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. 培训材料" href="training.html" />
     <link rel="prev" title="4. 实践" href="practice.html" /> 
 
   
@@ -89,16 +90,16 @@
 <li class="toctree-l1"><a class="reference internal" href="practice.html">4. 实践</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">5. 附录</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">5.1. 容器化规范</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">5.2. 最佳实践</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id4">5.2.1. 一般性的指南和建议</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id5">5.2.1.1. 容器应该是短暂的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#image">5.2. 最佳实践(image)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">5.2.1. 一般性的指南和建议</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">5.2.1.1. 容器应该是短暂的</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dockerignore">5.2.1.2. 使用 .dockerignore 文件</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">5.2.1.3. 使用多阶段构建</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id7">5.2.1.4. 避免安装不必要的包</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id8">5.2.1.5. 一个容器只运行一个进程</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">5.2.1.6. 镜像层数尽可能少</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">5.2.1.7. 将多行参数排序</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id11">5.2.1.8. 构建缓存</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">5.2.1.3. 使用多阶段构建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">5.2.1.4. 避免安装不必要的包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">5.2.1.5. 一个容器只运行一个进程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">5.2.1.6. 镜像层数尽可能少</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">5.2.1.7. 将多行参数排序</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">5.2.1.8. 构建缓存</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#dockerfile">5.2.2. Dockerfile 指令</a><ul>
@@ -118,9 +119,17 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#q-a">5.3. Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#container">5.3. 最佳实践(container)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">5.3.1. 不要在启动时构建镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">5.3.2. 不要将容器当做虚拟机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">5.3.3. 一个容器应只运行一个进程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#healthcheck">5.3.4. 提供HEALTHCHECK</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#q-a">5.4. Q&amp;A</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">6. 培训材料</a></li>
 </ul>
 
             
@@ -191,37 +200,37 @@
 <h2>5.1. 容器化规范<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://confluence.yitu-inc.com/pages/viewpage.action?pageId=307495610">容器化规范</a>。</p>
 </div>
+<div class="section" id="image">
+<h2>5.2. 最佳实践(image)<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h2>5.2. 最佳实践<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h3>5.2.1. 一般性的指南和建议<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id4">
-<h3>5.2.1. 一般性的指南和建议<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id5">
-<h4>5.2.1.1. 容器应该是短暂的<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<h4>5.2.1.1. 容器应该是短暂的<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p>通过 Dockerfile 构建的镜像所启动的容器应该尽可能短暂（生命周期短）。「短暂」意味着可以停止和销毁容器，并且创建一个新容器并部署好所需的设置和配置工作量应该是极小的。</p>
 </div>
 <div class="section" id="dockerignore">
 <h4>5.2.1.2. 使用 .dockerignore 文件<a class="headerlink" href="#dockerignore" title="Permalink to this headline">¶</a></h4>
 <p>使用 Dockerfile 构建镜像时最好是将 Dockerfile 放置在一个新建的空目录下。然后将构建镜像所需要的文件添加到该目录中。为了提高构建镜像的效率，你可以在目录下新建一个 .dockerignore 文件来指定要忽略的文件和目录。.dockerignore 文件的排除模式语法和 Git 的 .gitignore 文件相似。</p>
 </div>
-<div class="section" id="id6">
-<h4>5.2.1.3. 使用多阶段构建<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id5">
+<h4>5.2.1.3. 使用多阶段构建<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <p>在 Docker 17.05 以上版本中，你可以使用 多阶段构建 来减少所构建镜像的大小。</p>
 </div>
-<div class="section" id="id7">
-<h4>5.2.1.4. 避免安装不必要的包<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id6">
+<h4>5.2.1.4. 避免安装不必要的包<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>为了降低复杂性、减少依赖、减小文件大小、节约构建时间，你应该避免安装任何不必要的包。例如，不要在数据库镜像中包含一个文本编辑器。</p>
 </div>
-<div class="section" id="id8">
-<h4>5.2.1.5. 一个容器只运行一个进程<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id7">
+<h4>5.2.1.5. 一个容器只运行一个进程<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <p>应该保证在一个容器中只运行一个进程。将多个应用解耦到不同容器中，保证了容器的横向扩展和复用。例如 web 应用应该包含三个容器：web应用、数据库、缓存。</p>
 <p>如果容器互相依赖，你可以使用 Docker 自定义网络 来把这些容器连接起来。</p>
 </div>
-<div class="section" id="id9">
-<h4>5.2.1.6. 镜像层数尽可能少<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id8">
+<h4>5.2.1.6. 镜像层数尽可能少<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <p>你需要在 Dockerfile 可读性（也包括长期的可维护性）和减少层数之间做一个平衡。</p>
 </div>
-<div class="section" id="id10">
-<h4>5.2.1.7. 将多行参数排序<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id9">
+<h4>5.2.1.7. 将多行参数排序<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>将多行参数按字母顺序排序（比如要安装多个包时）。这可以帮助你避免重复包含同一个包，更新包列表时也更容易。也便于 PRs 阅读和审查。建议在反斜杠符号 \ 之前添加一个空格，以增加可读性。</p>
 <p>下面是来自 buildpack-deps 镜像的例子：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> \
@@ -233,8 +242,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id11">
-<h4>5.2.1.8. 构建缓存<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id10">
+<h4>5.2.1.8. 构建缓存<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p>在镜像的构建过程中，Docker 会遍历 Dockerfile 文件中的指令，然后按顺序执行。在执行每条指令之前，Docker 都会在缓存中查找是否已经存在可重用的镜像，如果有就使用现存的镜像，不再重复创建。如果你不想在构建过程中使用缓存，你可以在 docker build 命令中使用 --no-cache=true 选项。</p>
 <p>但是，如果你想在构建的过程中使用缓存，你得明白什么时候会，什么时候不会找到匹配的镜像，遵循的基本规则如下：</p>
 <p>从一个基础镜像开始（FROM 指令指定），下一条指令将和该基础镜像的所有子镜像进行匹配，检查这些子镜像被创建时使用的指令是否和被检查的指令完全一样。如果不是，则缓存失效。
@@ -463,8 +472,38 @@ exec &quot;$@&quot;
 </div>
 </div>
 </div>
+<div class="section" id="container">
+<h2>5.3. 最佳实践(container)<a class="headerlink" href="#container" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id11">
+<h3>5.3.1. 不要在启动时构建镜像<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>在使用<code class="docutils literal notranslate"><span class="pre">docker-compose</span></code>编排工具时，不要使用<code class="docutils literal notranslate"><span class="pre">build</span></code>参数指定构建上下文，在启动容器的时候，去构建镜像。应该使用<code class="docutils literal notranslate"><span class="pre">image</span></code>直接引用已构建好的镜像。</p>
+<p>应该把<code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>作为源码的一部分维护，镜像是作为发布包对外的。在部署时，应该是用发布包，而不是用源码临时编译一套。
+镜像可保证发布代码的强一致性。</p>
+</div>
+<div class="section" id="id12">
+<h3>5.3.2. 不要将容器当做虚拟机<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>docker是用来管理应用的，会使用linux中的<code class="docutils literal notranslate"><span class="pre">cgroups</span></code>和<code class="docutils literal notranslate"><span class="pre">namespace</span></code>做资源限制和资源隔离，不能当作虚拟机来。docker容器启动时，会根据设置的启动命令<code class="docutils literal notranslate"><span class="pre">CMD</span></code>或者<code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>在容器中启动应用进程，无需手动进入容器中去启动。</p>
+</div>
+<div class="section" id="id13">
+<h3>5.3.3. 一个容器应只运行一个进程<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>https://yq.aliyun.com/articles/5545</p>
+<p>通过将复杂应用解耦成一系列简单的进程、服务，可以更加简单的更新，运维和伸缩，符合微服务架构理念。同时单主进程应用可以大大简化容器内进程管理的复杂性。
+如果需要运行多个进程，应使用如<a class="reference external" href="http://supervisord.org/">supervisord</a>进程管理工具。</p>
+</div>
+<div class="section" id="healthcheck">
+<h3>5.3.4. 提供HEALTHCHECK<a class="headerlink" href="#healthcheck" title="Permalink to this headline">¶</a></h3>
+<p>Docker默认是通过容器中的主进程是否退出来判断容器状态是否异常。但如果容器内进程进入死循环或者僵死状态，应用并没有退出，但其实容器已经无法提供服务。这时可以使用  <code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span></code> 指定健康检测。</p>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">nginx</span>
+<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">curl</span> <span class="o">&amp;&amp;</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">lists</span><span class="o">/*</span>
+<span class="n">HEALTHCHECK</span> <span class="o">--</span><span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="n">s</span> <span class="o">--</span><span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="n">s</span> \
+  <span class="n">CMD</span> <span class="n">curl</span> <span class="o">-</span><span class="n">fs</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="o">/</span> <span class="o">||</span> <span class="n">exit</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="q-a">
-<h2>5.3. Q&amp;A<a class="headerlink" href="#q-a" title="Permalink to this headline">¶</a></h2>
+<h2>5.4. Q&amp;A<a class="headerlink" href="#q-a" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -475,6 +514,8 @@ exec &quot;$@&quot;
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="training.html" class="btn btn-neutral float-right" title="6. 培训材料" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="practice.html" class="btn btn-neutral" title="4. 实践" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

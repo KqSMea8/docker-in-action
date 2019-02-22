@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - mysql
+    tty: true
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+  fp-frontend:
+    container_name: fp-frontend
+    image: harbor.yitu-inc.com/observability/fp/frontend:release
+    restart: always
+    environment:
+      FP_BACKEND_HOST: fp-backend
+    ports:
+      - 8081:8081
+    networks:
+      - fp-cluster
+    tty: true
+
+  fp-backend:
+    container_name: fp-backend
+    image: harbor.yitu-inc.com/observability/fp/backend:release
+    restart: always
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: fp
+      MYSQL_USERNAME: fp
+      MYSQL_PASSWORD: fp
+    networks:
+      - fp-cluster
+      - mysql
+    tty: true
+
+networks:
+  mysql: {}
+  fp-cluster: {}

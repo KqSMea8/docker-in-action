@@ -582,6 +582,36 @@ lstat pom.xml: no such file or directory
     CMD [ "exec", "gosu", "redis", "redis-server" ]
     ```
     
+* HEALTHCHECK
+
+    `HEALTHCHECK`用来提供容器内应用进程健康状态检测。
+    Docker 引擎只可以通过容器内主进程是否退出来判断容器是否状态异常。很多情况下这没问题，但是如果程序进入死锁状态，或者死循环状态，应用进程并不退出，但是该容器已经无法提供服务了
+    
+    格式为:
+    
+    * `HEALTHCHECK [选项] CMD <命令>`：设置检查容器健康状况的命令
+    *`HEALTHCHECK NONE`：如果基础镜像有健康检查指令，使用这行可以屏蔽掉其健康检查指令
+    
+    `HEALTHCHECK`支持下列选项:
+    
+    * --interval=<间隔>：两次健康检查的间隔，默认为 30 秒；
+    * --timeout=<时长>：健康检查命令运行超时时间，如果超过这个时间，本次健康检查就被视为失败，默认 30 秒；
+    * --retries=<次数>：当连续失败指定次数后，则将容器状态视为 unhealthy，默认 3 次。
+    
+    和 `CMD`, `ENTRYPOINT` 一样，`HEALTHCHECK` 只可以出现一次，如果写了多个，只有最后一个生效。
+
+    在 `HEALTHCHECK [选项] CMD` 后面的命令，格式和 `ENTRYPOINT` 一样，分为 `shell` 格式，和 `exec` 格式。命令的返回值决定了该次健康检查的成功与否：0：成功；1：失败；2：保留，不要使用这个值。
+    
+    例如:
+    
+    ```
+    FROM nginx
+    RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+    HEALTHCHECK --interval=5s --timeout=3s \
+      CMD curl -fs http://localhost/ || exit 1
+    ```
+    
+    
 #### 构建镜像
 
 下面以`fp-frontend`为例，介绍如何编写`Dockerfile`，构建镜像。
@@ -705,7 +735,7 @@ ENTRYPOINT ["gosu", "fp", "java", "-jar", "fp-frontend-0.0.1-SNAPSHOT.jar"]
 
 ```
 ## 在工程根目录下执行
-sudo docker build -t fp/frontend .
+sudo docker build -t fp/frontend:0.0.1 .
 ```
 
 构建完成后，执行`sudo docker images`查看镜像。

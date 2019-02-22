@@ -16,6 +16,7 @@ Welcome to docker-in-action's documentation!
    docker/basic_cmd.md
    docker/practice.md
    docker/appendix.md
+   docker/training.md
 
 
 

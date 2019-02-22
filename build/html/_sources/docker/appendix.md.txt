@@ -4,7 +4,7 @@
 
 [容器化规范](https://confluence.yitu-inc.com/pages/viewpage.action?pageId=307495610)。
 
-## 最佳实践
+## 最佳实践(image)
 
 ### 一般性的指南和建议
 #### 容器应该是短暂的
@@ -283,5 +283,38 @@ $ docker run --rm -it postgres bash
 
 #### WORKDIR
 为了清晰性和可靠性，你应该总是在 `WORKDIR` 中使用绝对路径。另外，你应该使用 `WORKDIR` 来替代类似于 `RUN cd ... && do-something` 的指令，后者难以阅读、排错和维护。
+
+## 最佳实践(container)
+
+### 不要在启动时构建镜像
+
+在使用`docker-compose`编排工具时，不要使用`build`参数指定构建上下文，在启动容器的时候，去构建镜像。应该使用`image`直接引用已构建好的镜像。
+
+应该把`Dockerfile`作为源码的一部分维护，镜像是作为发布包对外的。在部署时，应该是用发布包，而不是用源码临时编译一套。
+镜像可保证发布代码的强一致性。
+
+### 不要将容器当做虚拟机
+
+docker是用来管理应用的，会使用linux中的`cgroups`和`namespace`做资源限制和资源隔离，不能当作虚拟机来。docker容器启动时，会根据设置的启动命令`CMD`或者`ENTRYPOINT`在容器中启动应用进程，无需手动进入容器中去启动。
+
+### 一个容器应只运行一个进程
+
+https://yq.aliyun.com/articles/5545
+
+通过将复杂应用解耦成一系列简单的进程、服务，可以更加简单的更新，运维和伸缩，符合微服务架构理念。同时单主进程应用可以大大简化容器内进程管理的复杂性。
+如果需要运行多个进程，应使用如[supervisord](http://supervisord.org/)进程管理工具。
+
+### 提供HEALTHCHECK
+
+Docker默认是通过容器中的主进程是否退出来判断容器状态是否异常。但如果容器内进程进入死循环或者僵死状态，应用并没有退出，但其实容器已经无法提供服务。这时可以使用  `HEALTHCHECK` 指定健康检测。
+
+例如:
+
+```
+FROM nginx
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+HEALTHCHECK --interval=5s --timeout=3s \
+  CMD curl -fs http://localhost/ || exit 1
+```
 
 ## Q&A

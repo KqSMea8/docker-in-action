@@ -114,6 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">5. 附录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">6. 培训材料</a></li>
 </ul>
 
             
@@ -686,6 +687,30 @@ Successfully built 6c93c2ef1e4b
 </pre></div>
 </div>
 </li>
+<li><p class="first">HEALTHCHECK</p>
+<p><code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span></code>用来提供容器内应用进程健康状态检测。
+Docker 引擎只可以通过容器内主进程是否退出来判断容器是否状态异常。很多情况下这没问题，但是如果程序进入死锁状态，或者死循环状态，应用进程并不退出，但是该容器已经无法提供服务了</p>
+<p>格式为:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span> <span class="pre">[选项]</span> <span class="pre">CMD</span> <span class="pre">&lt;命令&gt;</span></code>：设置检查容器健康状况的命令
+*<code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span> <span class="pre">NONE</span></code>：如果基础镜像有健康检查指令，使用这行可以屏蔽掉其健康检查指令</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span></code>支持下列选项:</p>
+<ul class="simple">
+<li>--interval=&lt;间隔&gt;：两次健康检查的间隔，默认为 30 秒；</li>
+<li>--timeout=&lt;时长&gt;：健康检查命令运行超时时间，如果超过这个时间，本次健康检查就被视为失败，默认 30 秒；</li>
+<li>--retries=&lt;次数&gt;：当连续失败指定次数后，则将容器状态视为 unhealthy，默认 3 次。</li>
+</ul>
+<p>和 <code class="docutils literal notranslate"><span class="pre">CMD</span></code>, <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> 一样，<code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span></code> 只可以出现一次，如果写了多个，只有最后一个生效。</p>
+<p>在 <code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span> <span class="pre">[选项]</span> <span class="pre">CMD</span></code> 后面的命令，格式和 <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> 一样，分为 <code class="docutils literal notranslate"><span class="pre">shell</span></code> 格式，和 <code class="docutils literal notranslate"><span class="pre">exec</span></code> 格式。命令的返回值决定了该次健康检查的成功与否：0：成功；1：失败；2：保留，不要使用这个值。</p>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">nginx</span>
+<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">curl</span> <span class="o">&amp;&amp;</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">lists</span><span class="o">/*</span>
+<span class="n">HEALTHCHECK</span> <span class="o">--</span><span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="n">s</span> <span class="o">--</span><span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="n">s</span> \
+  <span class="n">CMD</span> <span class="n">curl</span> <span class="o">-</span><span class="n">fs</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="o">/</span> <span class="o">||</span> <span class="n">exit</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </div>
 <div class="section" id="id9">
@@ -801,7 +826,7 @@ RUN chmod +x /usr/local/bin/gosu &amp;&amp; gosu nobody true
 </ul>
 <p>构建镜像，镜像名称为<code class="docutils literal notranslate"><span class="pre">fp/frontend</span></code>，tag为<code class="docutils literal notranslate"><span class="pre">0.0.1</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## 在工程根目录下执行</span>
-<span class="n">sudo</span> <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">fp</span><span class="o">/</span><span class="n">frontend</span> <span class="o">.</span>
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">fp</span><span class="o">/</span><span class="n">frontend</span><span class="p">:</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span> <span class="o">.</span>
 </pre></div>
 </div>
 <p>构建完成后，执行<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">images</span></code>查看镜像。</p>
