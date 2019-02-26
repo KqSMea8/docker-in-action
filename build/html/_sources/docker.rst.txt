@@ -3,21 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ServerMesh online documentation!
+Welcome to docker-in-action's documentation!
 ============================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   :numbered:
 
-   docker <docker>
-   kubernetes <k8s>
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   docker/intro.md
+   docker/basic_concept.md
+   docker/basic_cmd.md
+   docker/practice.md
+   docker/appendix.md
+   docker/training.md

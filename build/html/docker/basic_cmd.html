@@ -1,0 +1,522 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. 基本操作 &mdash; docker-in-action 0.1.alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. 实践" href="practice.html" />
+    <link rel="prev" title="2. 基本概念" href="basic_concept.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> docker-in-action
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../docker.html">docker</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">1. Getting Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_concept.html">2. 基本概念</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. 基本操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">3.1. 镜像</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">3.1.1. 构建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3.1.2. 拉取镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">3.1.3. 查看镜像列表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">3.1.4. 查看特定镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">3.1.5. 查看镜像详情</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">3.1.6. 删除镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">3.1.7. 导出镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">3.1.8. 导入镜像</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">3.2. 容器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">3.2.1. 启动容器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">3.2.2. 查看容器列表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">3.2.3. 启动容器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">3.2.4. 查看日志</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">3.2.5. 停止容器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">3.2.6. 执行命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">3.2.7. 拷贝容器文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">3.2.8. 查看容器详情</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">3.3. 仓库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="practice.html">4. 实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html">5. 附录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="training.html">6. 培训材料</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../k8s.html">kubernetes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">docker-in-action</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../docker.html">Welcome to docker-in-action’s documentation!</a> &raquo;</li>
+        
+      <li>3. 基本操作</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/docker/basic_cmd.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>3. 基本操作<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>3.1. 镜像<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>3.1.1. 构建<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo docker build -t &lt;image_name&gt;:&lt;image_tag&gt; &lt;docker_build_context&gt;
+
+说明:
+* image_name: 镜像名称，例如: photon/probe。如果关联镜像仓库，需要带上仓库地址，例如: http://harbor.yitu.com/photon/probe。
+* image_tag: 镜像tag，用于区分不同的使用场景或者版本等。默认是 latest，不过强制要求以产品版本号设置tag。在使用基础镜像构建产品镜像时，不要使用 latest。
+* docker_build_context: Docker构建上下文路径，可以使用 . 表示当前路径。在构建Docker镜像时，再详细说明。
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>3.1.2. 拉取镜像<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="o">&lt;</span><span class="n">image_name</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">image_tag</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>说明:</p>
+<ul class="simple">
+<li>image_name: 镜像名称，如果是非docker默认仓库(https://index.docker.io/v1/)的镜像，需要带上镜像仓库地址。</li>
+<li>image_tag: 镜像tag，默认是 latest，强烈要求使用明确的tag，不要使用 latest。</li>
+</ul>
+</div></blockquote>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>3.1.3. 查看镜像列表<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">images</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>3.1.4. 查看特定镜像<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">images</span> <span class="o">&lt;</span><span class="n">image_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">images</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>3.1.5. 查看镜像详情<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">inspect</span> <span class="o">&lt;</span><span class="n">image_name</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">image_tag</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">inspect</span> <span class="o">&lt;</span><span class="n">image_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">inspect</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">inspect</span> <span class="n">fce289e99eb9</span>
+</pre></div>
+</div>
+<blockquote>
+<div>说明: 镜像和容器本地操作中，使用&lt;image_name&gt;:&lt;image_tag&gt;的地方，均可以使用 &lt;image_id&gt; 替代。</div></blockquote>
+</div>
+<div class="section" id="id8">
+<h3>3.1.6. 删除镜像<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">rmi</span> <span class="o">&lt;</span><span class="n">image_name</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">image_tag</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">rmi</span> <span class="o">&lt;</span><span class="n">image_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">rmi</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">rmi</span> <span class="n">fce289e99eb9</span>
+</pre></div>
+</div>
+<blockquote>
+<div>注意: 删除镜像时，不能有该镜像运行的容器，否则会报错:
+Error response from daemon: conflict: unable to delete fce289e99eb9 (must be forced) - image is being used by stopped container 3bd9945585b7</div></blockquote>
+</div>
+<div class="section" id="id9">
+<h3>3.1.7. 导出镜像<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>可以将镜像导出为tar包。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">save</span> <span class="o">-</span><span class="n">o</span> <span class="o">&lt;</span><span class="n">image_tar_file</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">image_name</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">image_tag</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<p>使用重定向:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">save</span> <span class="o">&lt;</span><span class="n">image_name</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">image_tag</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">image_tar_file</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>说明:</p>
+<ul class="simple">
+<li>image_tar_file: 保存的tar文件名称</li>
+<li>image_name: 镜像名称</li>
+<li>image_tag: 镜像tag</li>
+</ul>
+</div></blockquote>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">save</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span><span class="o">.</span><span class="n">tar</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">save</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span> <span class="o">&gt;</span> <span class="n">hello</span><span class="o">.</span><span class="n">tar</span>
+</pre></div>
+</div>
+<blockquote>
+<div>说明: 亦可使用 &lt;iamge_id&gt; 替代 &lt;image_name&gt;:&lt;image_tag&gt;，但在导入镜像时会丢失tag信息，不建议。</div></blockquote>
+</div>
+<div class="section" id="id10">
+<h3>3.1.8. 导入镜像<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>可以将导出的tar包，导入到本地镜像仓库。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">load</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">image_tar_file</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">load</span> <span class="o">&lt;</span> <span class="o">&lt;</span><span class="n">image_tar_file</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>说明:</p>
+<ul class="simple">
+<li>image_tar_file: 导出的镜像tar文件路径</li>
+</ul>
+</div></blockquote>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">load</span> <span class="o">-</span><span class="n">i</span> <span class="n">hello</span><span class="o">.</span><span class="n">tar</span>
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">load</span> <span class="o">&lt;</span> <span class="n">hello</span><span class="o">.</span><span class="n">tar</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>3.2. 容器<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id12">
+<h3>3.2.1. 启动容器<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>可以使用镜像，启动容器。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">host_port1</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">container_port1</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">host_port2</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">container_port2</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">v</span> <span class="o">&lt;</span><span class="n">host_volume1</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">container_volume1</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">v</span> <span class="o">&lt;</span><span class="n">host_volume2</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">container_volume2</span><span class="o">&gt;</span>  <span class="o">-</span><span class="n">e</span> <span class="n">KEY1</span><span class="o">=</span><span class="n">VALUE1</span> <span class="o">-</span><span class="n">e</span> <span class="n">KEY2</span><span class="o">=</span><span class="n">VALUE2</span> <span class="o">--</span><span class="n">name</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">image_name</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">image_tag</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">args</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>说明:</p>
+<ul class="simple">
+<li>启动的主命令是 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">-d</span></code>是让容器以守护态运行。相对应的，<code class="docutils literal notranslate"><span class="pre">-ti</span></code>是以交互方式运行，即进入容器内部，可以在容器内操作命令。其中，-t 选项让Docker分配一个伪终端（pseudo-tty）并绑定到容器的标准输入上， -i 则让容器的标准输入保持打开。</li>
+<li><code class="docutils literal notranslate"><span class="pre">--rm</span></code> 是指在停止容器时(<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">stop</span></code>)，停止成功时，自动删除容器，释放资源。注意: 如果带上该参数，在容器启动失败时，会自动删除失败的容器。如果需要定位问题，将该参数移除。</li>
+<li><code class="docutils literal notranslate"><span class="pre">-p</span></code> 参数指定了主机和容器间的端口映射关系，完整的格式应该是 <code class="docutils literal notranslate"><span class="pre">&lt;host_ip&gt;:&lt;host_port&gt;:&lt;container_port&gt;/&lt;protocol&gt;</span></code>。其中，<code class="docutils literal notranslate"><span class="pre">host_ip</span></code>为主机上端口绑定IP，默认为<code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>；<code class="docutils literal notranslate"><span class="pre">host_port</span></code>为主机上映射的端口，即可在主机上访问容器服务的端口；<code class="docutils literal notranslate"><span class="pre">container_port</span></code>为容器中服务暴露的端口；<code class="docutils literal notranslate"><span class="pre">protocol</span></code>为端口协议，TCP或者UDP，默认为TCP。注意: 如果要将容器内的端口与主机端口映射，需要在容器中，将端口绑定在<code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>上，否则，网络不可达。</li>
+<li><code class="docutils literal notranslate"><span class="pre">-p</span></code>参数可以指定多个，即容器中有多个端口需要与主机映射。注意主机上端口冲突。</li>
+<li><code class="docutils literal notranslate"><span class="pre">-v</span></code>参数指定了主机和容器间的数据卷挂载，其中，<code class="docutils literal notranslate"><span class="pre">host_volume</span></code>是主机上的文件/目录路径(注意，需是绝对路径)；<code class="docutils literal notranslate"><span class="pre">container_volume</span></code>是容器中的文件/目录。挂载的主机目录的默认权限是<code class="docutils literal notranslate"><span class="pre">读写</span></code>。通过数据卷的方式，可以做到数据持久化，在容器销毁时，挂载的数据卷依然保留。另一方面，可以通过数据卷的方式，定制化配置文件。</li>
+<li><code class="docutils literal notranslate"><span class="pre">-e</span></code>参数指定了容器运行时的环境变量。对于可变配置，也可以通过环境变量的方式传入。</li>
+<li><code class="docutils literal notranslate"><span class="pre">--name</span></code>指定了容器运行的名称，默认容器以随机的方式生成名称。注意: 容器名称要保持唯一，否则会报错。</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;image_name&gt;:&lt;image_tag&gt;</span></code>: 容器使用的镜像，亦可以用 <code class="docutils literal notranslate"><span class="pre">&lt;image_id&gt;</span></code>。</li>
+<li><code class="docutils literal notranslate"><span class="pre">args</span></code>启动容器时，传入的参数列表，可选。后续介绍镜像构建时，再做详细介绍。</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id13">
+<h3>3.2.2. 查看容器列表<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>查询所有状态的容器:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONTAINER</span> <span class="n">ID</span>        <span class="n">IMAGE</span>               <span class="n">COMMAND</span>                  <span class="n">CREATED</span>             <span class="n">STATUS</span>              <span class="n">PORTS</span>                      <span class="n">NAMES</span>
+<span class="mi">505877</span><span class="n">bce603</span>        <span class="n">mongo</span>               <span class="s2">&quot;docker-entrypoint...&quot;</span>   <span class="mi">32</span> <span class="n">minutes</span> <span class="n">ago</span>      <span class="n">Up</span> <span class="mi">32</span> <span class="n">minutes</span>       <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">27017</span><span class="o">-&gt;</span><span class="mi">27017</span><span class="o">/</span><span class="n">tcp</span>   <span class="n">cmdb</span><span class="o">-</span><span class="n">mongo</span>
+<span class="n">d617d6ecfcbc</span>        <span class="n">redis</span>               <span class="s2">&quot;docker-entrypoint...&quot;</span>   <span class="mi">32</span> <span class="n">minutes</span> <span class="n">ago</span>      <span class="n">Up</span> <span class="mi">32</span> <span class="n">minutes</span>       <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">6379</span><span class="o">-&gt;</span><span class="mi">6379</span><span class="o">/</span><span class="n">tcp</span>     <span class="n">cmdb</span><span class="o">-</span><span class="n">redis</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>说明:</p>
+<ul class="simple">
+<li>STATUS: 容器运行状态，<code class="docutils literal notranslate"><span class="pre">Up</span></code>表示正常运行，<code class="docutils literal notranslate"><span class="pre">Exit</span></code>表示退出，根据退出码判断是否异常退出。</li>
+<li>PORTS: 端口映射关系。</li>
+</ul>
+</div></blockquote>
+<p>查询正在运行的容器:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">ps</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h3>3.2.3. 启动容器<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>在容器停止或者异常退出后，可以启动容器。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">start</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">start</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>说明:</p>
+<ul class="simple">
+<li>container_id: 容器id</li>
+<li>container_name: 容器名称</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id15">
+<h3>3.2.4. 查看日志<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>容器启动后，可以通过查看容器日志。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">logs</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">logs</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div>注意: logs查看的是控制台(stdout/stderr)日志。</div></blockquote>
+<p>如果需要持续输出日志(类似 <code class="docutils literal notranslate"><span class="pre">tail</span> <span class="pre">-f</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">logs</span> <span class="o">-</span><span class="n">f</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3>3.2.5. 停止容器<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">stop</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">stop</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3>3.2.6. 执行命令<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>可以在运行中的容器中执行命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">exec</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">cmd_line</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">exec</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">cmd_line</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>说明:</p>
+<ul class="simple">
+<li>容器必须是正常运行</li>
+<li><code class="docutils literal notranslate"><span class="pre">cmd_line</span></code>: 命令行</li>
+</ul>
+</div></blockquote>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">exec</span> <span class="n">d617d6ecfcbc</span> <span class="n">cat</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">redis</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id18">
+<h3>3.2.7. 拷贝容器文件<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">cp</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">container_file_path</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">host_file_path</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">cp</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">container_file_path</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">host_file_path</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>3.2.8. 查看容器详情<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">inspect</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">inspect</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id20">
+<h2>3.3. 仓库<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<p>使用公司内<a class="reference external" href="https://harbor.yitu-inc.com/harbor/projects">仓库</a>。</p>
+<p>在镜像构建时，再介绍仓库的交互。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="practice.html" class="btn btn-neutral float-right" title="4. 实践" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="basic_concept.html" class="btn btn-neutral" title="2. 基本概念" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, loulou.liu
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
